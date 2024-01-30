@@ -1,6 +1,7 @@
 // src/components/AuditRiskTable.tsx
 
 import React from 'react';
+import Link from 'next/link';
 
 interface TokenData {
   id: number;
@@ -13,6 +14,8 @@ interface TokenData {
   holders: string;
   topHoldersPercentage: string;
   tvl: string;
+  highRisks: string;
+lowRisks: string;
   risks: boolean[];
   governance: string;
 }
@@ -20,7 +23,7 @@ interface TokenData {
 const dummyData: TokenData[] = [
   // Your dummy data goes here
   {
-    id: 1,
+    id: 4,
     name: 'Grok',
     symbol: 'GROK',
     chain: 'ETH',
@@ -30,6 +33,8 @@ const dummyData: TokenData[] = [
     holders: '12K',
     topHoldersPercentage: '41%',
     tvl: '3',
+    highRisks: '1',
+    lowRisks: '2',
     risks: [true, true, false, true],
     governance: 'Renounced',
   },
@@ -44,6 +49,8 @@ const dummyData: TokenData[] = [
     holders: '12K',
     topHoldersPercentage: '41%',
     tvl: '3',
+    highRisks: '2',
+    lowRisks: '1',
     risks: [true, true, false, true],
     governance: 'Renounced',
   },
@@ -66,6 +73,9 @@ const AuditRiskTable: React.FC = () => {
             <th colSpan={2} className="border border-black px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Circulation
             </th>
+            <th colSpan={2} className="border border-black px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Possible Risks
+            </th>
             <th colSpan={1} className="border border-black px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Action
             </th>
@@ -79,6 +89,8 @@ const AuditRiskTable: React.FC = () => {
             <th className="border border-black px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Liquidity</th>
             <th className="border border-black px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Circulation</th>
             <th className="border border-black px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TVL</th>
+            <th className="border border-black px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">High Risks</th>
+            <th className="border border-black px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">low Risks</th>
             <th className="border border-black px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">View on Explorer</th>
           </tr>
         </thead>
@@ -88,14 +100,20 @@ const AuditRiskTable: React.FC = () => {
               {/* ... Table data cells ... */}
               <td className="border border-black px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{token.id}</td>
               {/* Assume you have a component to render token information */}
-              <td className="border border-black px-6 py-4 whitespace-nowrap text-sm text-gray-500">{token.name} ({token.symbol})</td>
+              <td className="border border-black px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <Link href={`/tokenInfo/${token.id}`} passHref>
+                  <span>{token.name} ({token.symbol})</span>
+            </Link>
+            </td>
               <td className="border border-black px-6 py-4 whitespace-nowrap text-sm text-gray-500">{token.safetyScore}</td>
               <td className="border border-black px-6 py-4 whitespace-nowrap text-sm text-gray-500">{token.price}</td>
               <td className="border border-black px-6 py-4 whitespace-nowrap text-sm text-gray-500">{token.liquidity}</td>
               <td className="border border-black px-6 py-4 whitespace-nowrap text-sm text-gray-500">{token.holders}</td>
               <td className="border border-black px-6 py-4 whitespace-nowrap text-sm text-gray-500">{token.tvl}</td>
+              <td className="border border-black px-6 py-4 whitespace-nowrap text-sm text-gray-500">{token.highRisks}</td>
+              <td className="border border-black px-6 py-4 whitespace-nowrap text-sm text-gray-500">{token.lowRisks}</td>
                             {/* Action cell */}
-                            <td className=" border border-black px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <td className=" border border-black px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <a href="#" className="text-indigo-600 hover:text-indigo-900">
                   View on Explorer
                 </a>

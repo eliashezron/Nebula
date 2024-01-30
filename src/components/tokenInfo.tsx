@@ -1,26 +1,18 @@
-// src/components/TokenInfo.tsx
-
+// pages/tokenInfo/[id].tsx
 import React from 'react';
+import { useRouter } from 'next/router';
+import TokenInfoComponent from './tokenInfoComponent'; // Assume your detailed component is named TokenInfoComponent
 
-const TokenInfo: React.FC = () => {
-  // Dummy data for the cards
-  const data = [
-    { title: 'Total contracts scanned', value: 12 },
-    { title: 'Total issues found', value: 19 },
-    { title: 'Risk tokens detected', value: 0 },
-  ];
+const TokenInfoPage: React.FC = () => {
+  const router = useRouter();
+  const { id } = router.query; // Get the id from the URL
 
   return (
-    <div className="flex justify-around items-center my-8">
-      {data.map((card, index) => (
-        <div key={index} className="bg-gray-800 p-4 rounded-lg shadow-md w-1/4">
-          <h3 className="text-gray-300 text-sm font-medium">{card.title}</h3>
-          <p className="text-white text-3xl font-semibold">{card.value}</p>
-        </div>
-      ))}
+    <div>
+      {/* Render the detailed token information based on the id */}
+      <TokenInfoComponent tokenId={id} />
     </div>
   );
 };
 
-export default TokenInfo;
-
+export default TokenInfoPage;

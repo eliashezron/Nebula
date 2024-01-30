@@ -1,7 +1,7 @@
 // pages/index.tsx
 import React from 'react';
 import Header from '../components/header';
-import TokenInfo from '../components/tokenInfo';
+import TokenInfo from '../components/tokenInfoComponent';
 import AuditRisk from '../components/auditRisk';
 import Footer from '../components/footer';
 import Scanner from '../components/contractScan';
@@ -11,12 +11,9 @@ const Home: React.FC = () => {
     <div className="bg-none min-h-screen text-black">
       <Header />
       <Scanner />
-      <div className="">
-        <TokenInfo />
-      </div>
       <div className="container mx-auto my-8">
         <AuditRisk />
-      <Footer />
+      {/* <Footer /> */}
       </div>
     </div>
   );
