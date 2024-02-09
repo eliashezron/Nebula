@@ -1,63 +1,34 @@
 // src/components/AuditRiskTable.tsx
-
+'use client'
 import React from 'react';
 import Link from 'next/link';
-
-interface TokenData {
-  id: number;
-  name: string;
-  symbol: string;
-  chain: string;
-  safetyScore: string;
-  price: string;
-  liquidity: string;
-  holders: string;
-  topHoldersPercentage: string;
-  tvl: string;
-  highRisks: string;
-lowRisks: string;
-  risks: boolean[];
-  governance: string;
-}
-
-const dummyData: TokenData[] = [
-  // Your dummy data goes here
-  {
-    id: 4,
-    name: 'Grok',
-    symbol: 'GROK',
-    chain: 'ETH',
-    safetyScore: '0/100',
-    price: '~$ 0.0041',
-    liquidity: '$ 870K',
-    holders: '12K',
-    topHoldersPercentage: '41%',
-    tvl: '3',
-    highRisks: '1',
-    lowRisks: '2',
-    risks: [true, true, false, true],
-    governance: 'Renounced',
-  },
-  {
-    id: 1,
-    name: 'Treat',
-    symbol: 'GROK',
-    chain: 'ETH',
-    safetyScore: '0/100',
-    price: '~$ 0.0041',
-    liquidity: '$ 870K',
-    holders: '12K',
-    topHoldersPercentage: '41%',
-    tvl: '3',
-    highRisks: '2',
-    lowRisks: '1',
-    risks: [true, true, false, true],
-    governance: 'Renounced',
-  },
-  // ... more dummy data
-];
+import { useEffect, useState } from 'react';
+import supabase from '@/config/supabaseClient';
+import { Database } from '@/assets/supabase';
 
 const AuditRiskTable: React.FC = () => {
+  // Define the type for a single token info row
+  type TokenInfoRow = Database['public']['Tables']['tokenInfo']['Row'];
+  const [fetchError, setFetchError] = useState<string | null>(null);
+  const [tokenData, setTokenData] = useState<TokenInfoRow[]>([]);
+
+  useEffect(() => {
+    const fetchTokens = async () => {
+      const { data, error } = await supabase
+      .from('tokenInfo') // Specify the type when calling 'from'
+      .select('*');
+
+      if (error) {
+        setFetchError(error.message);
+      } else if (data) {
+        setTokenData(data);
+      }
+    };
+    fetchTokens();
+  }, []);
+
+ 
+
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full table-auto bg-white divide-y divide-gray-200 border border-black">
@@ -95,8 +66,8 @@ const AuditRiskTable: React.FC = () => {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {dummyData.map((token, index) => (
-            <tr key={index}>
+          {tokenData.map((token, index) => (
+            <tr key={token.id}>
               {/* ... Table data cells ... */}
               <td className="border border-black px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{token.id}</td>
               {/* Assume you have a component to render token information */}
