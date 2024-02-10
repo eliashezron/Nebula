@@ -1,11 +1,8 @@
 'use client'
 import React, { useState } from 'react';
 import { SearchIcon } from '@heroicons/react/solid';
-import supabase from '@/config/supabaseClient';
 
 const Scanner: React.FC = () => {
-  // console.log(supabase);
-  // console.log(process.env.NEXT_PUBLIC_SUPABASE_KEY);
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSearch = () => {

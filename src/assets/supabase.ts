@@ -11,11 +11,15 @@ export type Database = {
     Tables: {
       tokenInfo: {
         Row: {
+          address: string | null
           chain: string | null
           circulation: string | null
           highRisks: string | null
           holders: string | null
           id: number
+          isAccount: boolean | null
+          isERC20: boolean | null
+          isProxy: boolean | null
           liquidity: string | null
           lowRisks: string | null
           name: string
@@ -26,11 +30,15 @@ export type Database = {
           tvl: string | null
         }
         Insert: {
+          address?: string | null
           chain?: string | null
           circulation?: string | null
           highRisks?: string | null
           holders?: string | null
           id?: number
+          isAccount?: boolean | null
+          isERC20?: boolean | null
+          isProxy?: boolean | null
           liquidity?: string | null
           lowRisks?: string | null
           name: string
@@ -41,11 +49,15 @@ export type Database = {
           tvl?: string | null
         }
         Update: {
+          address?: string | null
           chain?: string | null
           circulation?: string | null
           highRisks?: string | null
           holders?: string | null
           id?: number
+          isAccount?: boolean | null
+          isERC20?: boolean | null
+          isProxy?: boolean | null
           liquidity?: string | null
           lowRisks?: string | null
           name?: string
