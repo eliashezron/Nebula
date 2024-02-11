@@ -1,3 +1,4 @@
+import ContractApiResponse from "@/types/apiInterfaces";
 async function fetchContractInfo(contractAddress : string) {
     const secretKey = process.env.NEXT_PUBLIC_VOYAGER_SECRET_KEY;
     if (!secretKey) {
@@ -15,7 +16,7 @@ async function fetchContractInfo(contractAddress : string) {
       throw new Error('Failed to fetch contract info');
     }
   
-    return response.json();
-  }
-  
+    return response.json() as Promise<ContractApiResponse>;
+}
+
 export default fetchContractInfo;

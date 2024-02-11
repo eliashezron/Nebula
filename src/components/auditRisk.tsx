@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import supabase from '@/config/supabaseClient';
-import { Database } from '@/assets/supabase';
+import { Database } from '@/types/supabase';
 
 const AuditRiskTable: React.FC = () => {
   // Define the type for a single token info row
