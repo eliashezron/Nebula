@@ -85,7 +85,7 @@ const AuditRiskTable: React.FC = () => {
               <td className="border border-black px-6 py-4 whitespace-nowrap text-sm text-gray-500">{token.lowRisks}</td>
                             {/* Action cell */}
                 <td className=" border border-black px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                <a href={`https://voyager.online/contract/${token.address}`} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:text-indigo-900">
                   View on Explorer
                 </a>
               </td>
