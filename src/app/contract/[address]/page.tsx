@@ -2,22 +2,31 @@
 'use client'
 import React,{useState, useEffect, use} from 'react';
 import { useRouter } from 'next/navigation'
-import { ClipboardCopyIcon, ChevronDownIcon, ChevronUpIcon, ChevronLeftIcon } from '@heroicons/react/outline'; 
+import {ChevronDownIcon, ChevronUpIcon, ChevronLeftIcon, DocumentDuplicateIcon } from '@heroicons/react/outline'; 
 import { Database } from '@/types/supabase';
-import { fetchTokenDetails } from '@/functions/supabaseFunctions';
+import { fetchTokenDetails } from '@/utils/supabaseFunctions';
 import Scanner from '../../../components/contractScan';
+import { shortenAddress } from '@/helpers/methods';
+
 
 export default function Page({ params }: { params: { address: string } }) {
     const router = useRouter();
     type TokenInfoRow = Database['public']['Tables']['tokenInfo']['Row'];
-    const [tokenData, setTokenData] = useState<TokenInfoRow>({} as TokenInfoRow);
+    const [tokenData, setTokenData] = useState<TokenInfoRow | null>(null);
+    const [classHash, setClassHash] = useState<string>('');
     const address = params.address;
     useEffect(() => {
-        fetchTokenDetails(address as string).then((data) => {
-          setTokenData(data);
-          console.log('loging the data',data);
-        });
-    }, [ address]);
+      if (!address) return;
+      fetchTokenDetails(address).then((data) => {
+        setTokenData(data);
+        console.log('logging the data', data);
+        if (data && data.classHash) {
+          setClassHash(data.classHash);
+        }
+
+      });
+    }, [address]);
+    console.log('logging the token data here', tokenData?.isAccount);
     
 const [selectedRisk, setSelectedRisk] = useState<string | null>(null);
   const goBack = () => {
@@ -46,20 +55,24 @@ const [selectedRisk, setSelectedRisk] = useState<string | null>(null);
     setSelectedRisk(selectedRisk === title ? null : title);
   };
 
+  const shortAddress = shortenAddress(address);
+  const shortClassHash = shortenAddress(classHash);
+  
+
   return (
     <div className="container bg-none min-h-screen mx-auto p-3">
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex justify-between items-center mb-1">
         <button onClick={goBack} className="text-gray-900 hover:text-blue-900 font-bold text-2xl flex">
           <ChevronLeftIcon className="h-5 w-5 text-4xl mr-2 mt-1" /> <p>Back</p>
         </button>
         <Scanner/>
       </div>
 
-      <div className="text-center mb-6">
+      <div className="flex justify-items-start text-center">
         <h1 className="text-4xl font-bold">{tokenData ? tokenData.name : ''}</h1>
-        <div className="flex justify-center items-center gap-2 mt-2">
-          <p className="text-gray-700">Token Address</p>
-          <ClipboardCopyIcon className="h-5 w-5 cursor-pointer" onClick={() => navigator.clipboard.writeText(address)} />
+        <div className="flex justify-center items-center gap-2">
+          <p className="text-gray-700">{shortAddress}</p>
+          <DocumentDuplicateIcon className="h-5 w-5 cursor-pointer" onClick={() => navigator.clipboard.writeText(address)} />
         </div>
       </div> 
       <div className="flex justify-items-start items-center text-gray p-4">
@@ -116,29 +129,34 @@ const [selectedRisk, setSelectedRisk] = useState<string | null>(null);
                     <div className="flex justify-between items-center mb-2">
                         <span>Contract Address</span>
                         <div className="flex items-center">
-                            <span>add</span>
-                            <ClipboardCopyIcon className="h-5 w-5 cursor-pointer ml-2" onClick={() => navigator.clipboard.writeText('')} />
+                            <span>{shortAddress}</span>
+                            <DocumentDuplicateIcon className="h-5 w-5 cursor-pointer ml-2" onClick={() => navigator.clipboard.writeText(address)} />
                         </div>
                     </div>
                     <div className="flex justify-between items-center mb-2">
                         <span>Class Hash</span>
                         <div className="flex items-center">
-                            <span>add</span>
-                            <ClipboardCopyIcon className="h-5 w-5 cursor-pointer ml-2" onClick={() => navigator.clipboard.writeText('')} />
+                            <span>{shortClassHash}</span>
+                            <DocumentDuplicateIcon className="h-5 w-5 cursor-pointer ml-2" onClick={() => navigator.clipboard.writeText(classHash)} />
                         </div>
                     </div>
-                    {/* ... Add other fields in a similar manner ... */}
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between items-center mb-2">
                         <span>IsAccount</span>
-                        <span>True</span> {/* Replace with actual data */}
+                        <div className="flex items-center">
+                            <span>{tokenData ? String(tokenData?.isAccount) : ''}</span>
+                        </div>
                     </div>
-                    <div className="flex justify-between items-center">
-                        <span>IsUpgradeadble</span>
-                        <span>True</span> {/* Replace with actual data */}
+                    <div className="flex justify-between items-center mb-2">
+                        <span>IsERC20</span>
+                        <div className="flex items-center">
+                            <span>{tokenData ? String(tokenData?.isERC20) : ''}</span>
+                        </div>
                     </div>
-                    <div className="flex justify-between items-center">
-                        <span>IsProxy</span>
-                        <span>False</span> {/* Replace with actual data */}
+                    <div className="flex justify-between items-center mb-2">
+                        <span>isProxy</span>
+                        <div className="flex items-center">
+                            <span>{tokenData ? String(tokenData?.isProxy) : ''}</span>
+                        </div>
                     </div>
                 </div>
             </div>

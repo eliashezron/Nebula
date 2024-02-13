@@ -1,8 +1,8 @@
 'use client'
 import React, { useState } from 'react';
 import { SearchIcon } from '@heroicons/react/solid';
-import fetchContractInfo from '@/functions/apiFunctions';
-import {saveContractInfoToSupabase, addressExists} from '@/functions/supabaseFunctions';
+import fetchContractInfo from '@/utils/apiFunctions';
+import {saveContractInfoToSupabase, addressExists} from '@/utils/supabaseFunctions';
 import { useRouter } from 'next/navigation'
 
 const Scanner: React.FC = () => {
