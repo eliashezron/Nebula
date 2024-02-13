@@ -2,18 +2,22 @@
 import React, { useState } from 'react';
 import { SearchIcon } from '@heroicons/react/solid';
 import fetchContractInfo from '@/functions/apiFunctions';
-import saveContractInfoToSupabase from '@/functions/supabaseFunctions';
+import {saveContractInfoToSupabase, addressExists} from '@/functions/supabaseFunctions';
 
 const Scanner: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSearch = async() => {
-    // Implement your search logic here
     console.log(`Search for: ${searchTerm}`);
     try {
-      const contractInfo = await fetchContractInfo(searchTerm);
-      await saveContractInfoToSupabase(contractInfo);
-      console.log('Contract info saved to Supabase');
+      const contractInfo = await fetchContractInfo(searchTerm);  
+      const exists = await addressExists(contractInfo.address);
+      if (exists) {
+        console.log('Address already exists in the database.');
+      } else {
+        await saveContractInfoToSupabase(contractInfo);
+        console.log('Contract info saved to Supabase');
+      }
     } catch (error) {
       console.error(error);
     }

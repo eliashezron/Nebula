@@ -72,7 +72,7 @@ const AuditRiskTable: React.FC = () => {
               <td className="border border-black px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{token.id}</td>
               {/* Assume you have a component to render token information */}
               <td className="border border-black px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-              <Link href={`/tokenInfo/${token.id}`} passHref>
+              <Link href={`/contract/${token.address}`} passHref>
                   <span>{token.name} ({token.symbol})</span>
             </Link>
             </td>
