@@ -16,5 +16,4 @@ interface ContractApiResponse {
     tokenName: string;
     tokenSymbol: string;
 }
-
 export default ContractApiResponse;

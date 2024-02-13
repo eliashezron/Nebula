@@ -2,9 +2,10 @@
 'use client'
 import React,{useState, useEffect, use} from 'react';
 import { useRouter } from 'next/navigation'
-import { ClipboardCopyIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/outline'; 
+import { ClipboardCopyIcon, ChevronDownIcon, ChevronUpIcon, ChevronLeftIcon } from '@heroicons/react/outline'; 
 import { Database } from '@/types/supabase';
 import { fetchTokenDetails } from '@/functions/supabaseFunctions';
+import Scanner from '../../../components/contractScan';
 
 export default function Page({ params }: { params: { address: string } }) {
     const router = useRouter();
@@ -20,7 +21,7 @@ export default function Page({ params }: { params: { address: string } }) {
     
 const [selectedRisk, setSelectedRisk] = useState<string | null>(null);
   const goBack = () => {
-    router.back();
+    router.push('/');
   };
 
   // Dummy risk data
@@ -48,10 +49,10 @@ const [selectedRisk, setSelectedRisk] = useState<string | null>(null);
   return (
     <div className="container bg-none min-h-screen mx-auto p-3">
       <div className="flex justify-between items-center mb-4">
-        <button onClick={goBack} className="text-blue-600 hover:text-blue-800">
-          <span>Go Back</span>
+        <button onClick={goBack} className="text-gray-900 hover:text-blue-900 font-bold text-2xl flex">
+          <ChevronLeftIcon className="h-5 w-5 text-4xl mr-2 mt-1" /> <p>Back</p>
         </button>
-        {/* Search input could go here */}
+        <Scanner/>
       </div>
 
       <div className="text-center mb-6">
@@ -60,8 +61,24 @@ const [selectedRisk, setSelectedRisk] = useState<string | null>(null);
           <p className="text-gray-700">Token Address</p>
           <ClipboardCopyIcon className="h-5 w-5 cursor-pointer" onClick={() => navigator.clipboard.writeText(address)} />
         </div>
+      </div> 
+      <div className="flex justify-items-start items-center text-gray p-4">
+        <div className="flex items-center border border-black mr-2">
+          <span className="mx-2 py-1 px-3">Nebula score 75/100</span>
+          </div>
+        <div className="flex items-center border border-black mr-2">
+          <span className="mx-2 py-1 px-3">Contract code</span>
+        </div>
+        <div className="flex items-center border border-black mr-2">
+          <span className="mx-2 bg-gray-500 py-1 px-3">Attention Required 3</span>
+        </div>
+        <div className="flex items-center border border-black mr-2">
+          <button className="mx-2 py-1 px-3 ">Explorer</button>
+        </div>
+        <div className="flex items-center border border-black">
+          <button className="mx-2 py-1 px-3 ">Share</button>
+        </div>
       </div>
-
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 ">
           <div className="md:col-span-2 ">
           {Object.entries(riskCategories).map(([riskLevel, risks]) => (
@@ -97,7 +114,14 @@ const [selectedRisk, setSelectedRisk] = useState<string | null>(null);
                         <span>ERC20</span> {/* Replace with actual data */}
                     </div>
                     <div className="flex justify-between items-center mb-2">
-                        <span>Token Contract Address</span>
+                        <span>Contract Address</span>
+                        <div className="flex items-center">
+                            <span>add</span>
+                            <ClipboardCopyIcon className="h-5 w-5 cursor-pointer ml-2" onClick={() => navigator.clipboard.writeText('')} />
+                        </div>
+                    </div>
+                    <div className="flex justify-between items-center mb-2">
+                        <span>Class Hash</span>
                         <div className="flex items-center">
                             <span>add</span>
                             <ClipboardCopyIcon className="h-5 w-5 cursor-pointer ml-2" onClick={() => navigator.clipboard.writeText('')} />

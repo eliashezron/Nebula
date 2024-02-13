@@ -3,8 +3,10 @@ import React, { useState } from 'react';
 import { SearchIcon } from '@heroicons/react/solid';
 import fetchContractInfo from '@/functions/apiFunctions';
 import {saveContractInfoToSupabase, addressExists} from '@/functions/supabaseFunctions';
+import { useRouter } from 'next/navigation'
 
 const Scanner: React.FC = () => {
+  const router = useRouter();
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSearch = async() => {
@@ -14,9 +16,11 @@ const Scanner: React.FC = () => {
       const exists = await addressExists(contractInfo.address);
       if (exists) {
         console.log('Address already exists in the database.');
+        router.push(`/contract/${contractInfo.address}`);
       } else {
         await saveContractInfoToSupabase(contractInfo);
         console.log('Contract info saved to Supabase');
+        router.push(`/contract/${contractInfo.address}`);
       }
     } catch (error) {
       console.error(error);
@@ -31,10 +35,6 @@ const Scanner: React.FC = () => {
 
   return (
     <div className="flex flex-col justify-center items-center my-12 w-full px-4">
-      <h1 className="text-2xl font-bold text-center mb-2 text-gray-500">Scanner</h1>
-      <p className="text-center text-sm mb-4 text-gray-500">
-        Take informed decisions by verifying the security risks of smart contracts.
-      </p>
       <div className="flex w-full md:w-2/3 lg:w-1/2 xl:w-2/3 border-2 border-gray-300 rounded-lg overflow-hidden">
         <input
           className="pl-4 pr-3 pt-4 pb-4 py-2 flex-grow"

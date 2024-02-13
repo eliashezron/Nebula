@@ -16,6 +16,7 @@ async function saveContractInfoToSupabase(data: ContractApiResponse): Promise<vo
         isProxy: data.isProxy,
         name: data.tokenName,
         symbol: data.tokenSymbol,
+        classHash: data.classHash,
       },
     ]);
 

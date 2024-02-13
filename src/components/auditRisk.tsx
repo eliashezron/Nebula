@@ -11,6 +11,15 @@ const AuditRiskTable: React.FC = () => {
   type TokenInfoRow = Database['public']['Tables']['tokenInfo']['Row'];
   const [fetchError, setFetchError] = useState<string | null>(null);
   const [tokenData, setTokenData] = useState<TokenInfoRow[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const tokensPerPage = 6;
+  const indexOfLastToken = currentPage * tokensPerPage;
+  const indexOfFirstToken = indexOfLastToken - tokensPerPage;
+  const currentTokens = tokenData.slice(indexOfFirstToken, indexOfLastToken);
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+  const goToNextPage = () => setCurrentPage((prev) => (prev < Math.ceil(tokenData.length / tokensPerPage) ? prev + 1 : prev));
+  const goToPreviousPage = () => setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev));
+
 
   useEffect(() => {
     const fetchTokens = async () => {
@@ -66,7 +75,7 @@ const AuditRiskTable: React.FC = () => {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {tokenData.map((token, index) => (
+          {currentTokens.map((token, index) => (
             <tr key={token.id}>
               {/* ... Table data cells ... */}
               <td className="border border-black px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{token.id}</td>
@@ -93,6 +102,25 @@ const AuditRiskTable: React.FC = () => {
           ))}
         </tbody>
       </table>
+      <div className="flex justify-center mt-4">
+        <button onClick={goToPreviousPage} disabled={currentPage === 1} className="px-4 py-2 mx-1 rounded-md bg-gray-500 text-white disabled:bg-gray-200">
+          Previous
+        </button>
+
+        {Array.from({ length: Math.ceil(tokenData.length / tokensPerPage) }, (_, index) => (
+          <button
+            key={index}
+            onClick={() => paginate(index + 1)}
+            className={`px-4 py-2 mx-1 rounded-md ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-white text-blue-500'}`}
+          >
+            {index + 1}
+          </button>
+        ))}
+
+        <button onClick={goToNextPage} disabled={currentPage === Math.ceil(tokenData.length / tokensPerPage)} className="px-4 py-2 mx-1 rounded-md bg-gray-500 text-white disabled:bg-gray-200">
+          Next
+        </button>
+      </div>
     </div>
   );
 };

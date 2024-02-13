@@ -14,6 +14,7 @@ export type Database = {
           address: string | null
           chain: string | null
           circulation: string | null
+          classHash: string | null
           highRisks: string | null
           holders: string | null
           id: number
@@ -33,6 +34,7 @@ export type Database = {
           address?: string | null
           chain?: string | null
           circulation?: string | null
+          classHash?: string | null
           highRisks?: string | null
           holders?: string | null
           id?: number
@@ -52,6 +54,7 @@ export type Database = {
           address?: string | null
           chain?: string | null
           circulation?: string | null
+          classHash?: string | null
           highRisks?: string | null
           holders?: string | null
           id?: number
