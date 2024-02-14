@@ -1,5 +1,5 @@
-import React, { ReactNode, useRef, useEffect } from 'react';
-import { XIcon, ClipboardCopyIcon } from '@heroicons/react/outline';
+import React, { ReactNode,useEffect } from 'react';
+import { XIcon } from '@heroicons/react/outline';
 import CopyToClipboard from './copy'; 
 
 interface ModalProps {
@@ -23,13 +23,6 @@ const Modal = ({ isOpen, closeModal, tokenName, contractCode }: ModalProps) => {
     return () => window.removeEventListener('click', handleOutsideClick);
   }, []);
 
-  const textAreaRef = useRef(null);
-
-  useEffect(() => {
-    if (isOpen && textAreaRef.current) {
-      (textAreaRef.current as HTMLTextAreaElement).focus();
-    }
-  }, [isOpen]);
   const copyCodeToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(contractCode);
