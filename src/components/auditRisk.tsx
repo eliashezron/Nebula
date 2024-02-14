@@ -12,7 +12,7 @@ const AuditRiskTable: React.FC = () => {
   const [fetchError, setFetchError] = useState<string | null>(null);
   const [tokenData, setTokenData] = useState<TokenInfoRow[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const tokensPerPage = 6;
+  const tokensPerPage = 10;
   const indexOfLastToken = currentPage * tokensPerPage;
   const indexOfFirstToken = indexOfLastToken - tokensPerPage;
   const currentTokens = tokenData.slice(indexOfFirstToken, indexOfLastToken);
@@ -76,9 +76,9 @@ const AuditRiskTable: React.FC = () => {
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
           {currentTokens.map((token, index) => (
-            <tr key={token.id}>
+            <tr key={index}>
               {/* ... Table data cells ... */}
-              <td className="border border-black px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{token.id}</td>
+              <td className="border border-black px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{index+1}</td>
               {/* Assume you have a component to render token information */}
               <td className="border border-black px-6 py-4 whitespace-nowrap text-sm text-gray-500">
               <Link href={`/contract/${token.address}`} passHref>

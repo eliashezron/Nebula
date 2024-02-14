@@ -2,13 +2,13 @@
 'use client'
 import React,{useState, useEffect, use} from 'react';
 import { useRouter } from 'next/navigation'
-import {ChevronDownIcon, ChevronUpIcon, ChevronLeftIcon, DocumentDuplicateIcon } from '@heroicons/react/outline'; 
+import {ChevronDownIcon, ChevronUpIcon, ChevronLeftIcon, DocumentDuplicateIcon, ShareIcon, GlobeAltIcon, CodeIcon } from '@heroicons/react/outline'; 
 import { Database } from '@/types/supabase';
 import { fetchTokenDetails } from '@/utils/supabaseFunctions';
 import Scanner from '../../../components/contractScan';
 import { shortenAddress } from '@/helpers/methods';
 import Modal from '../../../templates/modal';
-
+import CopyToClipboard from '@/templates/copy';
 
 export default function Page({ params }: { params: { address: string } }) {
     const router = useRouter();
@@ -82,7 +82,9 @@ contract MyContract {
       <h1 className="text-2xl md:text-4xl font-bold my-2">{tokenData ? tokenData.name : ''}</h1>
       <div className="flex justify-center items-center gap-2">
         <p className="text-gray-700 text-sm md:text-base">{shortAddress}</p>
-        <DocumentDuplicateIcon className="h-5 w-5 cursor-pointer" onClick={() => navigator.clipboard.writeText(address)} />
+        <div className="text-right">
+          <CopyToClipboard textToCopy={address} />
+        </div>
       </div>
       </div>
       <div className="p-4">
@@ -92,17 +94,26 @@ contract MyContract {
         </div>
         <div className="flex items-center border border-black" onClick={openModal}>
           <span className="px-3 py-1">Contract code</span>
+          <CodeIcon className="h-5 w-5 mr-2 cursor-pointer" />
         </div>
         <div className="flex items-center border border-black bg-gray-500">
           <span className="px-3 py-1">Attention Required 3</span>
         </div>
         <div className="flex items-center border border-black">
-          <button className="px-3 py-1">Explorer</button>
+          <button className="px-3 py-1"><GlobeAltIcon className="h-5 w-5"></GlobeAltIcon></button>
         </div>
         <div className="flex items-center border border-black">
-          <button className="px-3 py-1">Share</button>
+          <button className="px-3 py-1"><ShareIcon className="h-5 w-5" ></ShareIcon></button>
+          
         </div>
-        <Modal isOpen={isModalOpen} closeModal={closeModal}>
+        <Modal
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+        tokenName="GROK Token"
+        contractCode = {dummyContractCode} 
+        // Replace with the actual token name
+        // Pass the contract code you want to display
+        >
         <pre className="overflow-x-auto p-3 bg-gray-100 rounded">{dummyContractCode}</pre>
       </Modal>
       </div>
@@ -145,14 +156,18 @@ contract MyContract {
                         <span>Contract Address</span>
                         <div className="flex items-center">
                             <span>{shortAddress}</span>
-                            <DocumentDuplicateIcon className="h-5 w-5 cursor-pointer ml-2" onClick={() => navigator.clipboard.writeText(address)} />
+                            <div className="text-right">
+                              <CopyToClipboard textToCopy={address} />
+                            </div>
                         </div>
                     </div>
                     <div className="flex justify-between items-center mb-2">
                         <span>Class Hash</span>
                         <div className="flex items-center">
                             <span>{shortClassHash}</span>
-                            <DocumentDuplicateIcon className="h-5 w-5 cursor-pointer ml-2" onClick={() => navigator.clipboard.writeText(classHash)} />
+                            <div className="text-right">
+                              <CopyToClipboard textToCopy={classHash} />
+                            </div>
                         </div>
                     </div>
                     <div className="flex justify-between items-center mb-2">
