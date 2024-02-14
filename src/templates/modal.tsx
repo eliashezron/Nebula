@@ -12,17 +12,24 @@ interface ModalProps {
 }
 
 const Modal = ({ isOpen, closeModal, tokenName, contractCode }: ModalProps) => {
-  if (!isOpen) return null;
-  const handleOutsideClick = (e: MouseEvent) => {
-    if ((e.target as Element).classList.contains('modal-backdrop')) {
-      closeModal();
-    }
-  };
-
   useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if ((e.target as Element).classList.contains('modal-backdrop')) {
+        closeModal();
+      }
+    };
+
+    // Add event listener when the component is mounted
     window.addEventListener('click', handleOutsideClick);
-    return () => window.removeEventListener('click', handleOutsideClick);
-  }, []);
+
+    // Remove event listener on cleanup
+    return () => {
+      window.removeEventListener('click', handleOutsideClick);
+    };
+  }, [closeModal]); // Ensure closeModal is a stable function
+
+  // Early return must be after useEffect
+  if (!isOpen) return null;
 
   const copyCodeToClipboard = async () => {
     try {
