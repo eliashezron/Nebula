@@ -109,7 +109,7 @@ contract MyContract {
         <Modal
         isOpen={isModalOpen}
         closeModal={closeModal}
-        tokenName="GROK Token"
+        tokenName={tokenData?.name || ''}
         contractCode = {dummyContractCode} 
         // Replace with the actual token name
         // Pass the contract code you want to display
