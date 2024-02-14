@@ -1,3 +1,4 @@
+'use client'
 import React, { ReactNode,useEffect } from 'react';
 import { XIcon } from '@heroicons/react/outline';
 import CopyToClipboard from './copy'; 
