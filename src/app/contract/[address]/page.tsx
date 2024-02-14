@@ -7,6 +7,7 @@ import { Database } from '@/types/supabase';
 import { fetchTokenDetails } from '@/utils/supabaseFunctions';
 import Scanner from '../../../components/contractScan';
 import { shortenAddress } from '@/helpers/methods';
+import Modal from '../../../templates/modal';
 
 
 export default function Page({ params }: { params: { address: string } }) {
@@ -57,6 +58,16 @@ const [selectedRisk, setSelectedRisk] = useState<string | null>(null);
 
   const shortAddress = shortenAddress(address);
   const shortClassHash = shortenAddress(classHash);
+
+  const [isModalOpen, setModalOpen] = useState(false);
+  const dummyContractCode = `pragma solidity ^0.8.0;
+
+contract MyContract {
+  // Your contract code goes here
+}`;
+
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
   
 
   return (
@@ -67,30 +78,34 @@ const [selectedRisk, setSelectedRisk] = useState<string | null>(null);
         </button>
         <Scanner/>
       </div>
-
-      <div className="flex justify-items-start text-center">
-        <h1 className="text-4xl font-bold">{tokenData ? tokenData.name : ''}</h1>
-        <div className="flex justify-center items-center gap-2">
-          <p className="text-gray-700">{shortAddress}</p>
-          <DocumentDuplicateIcon className="h-5 w-5 cursor-pointer" onClick={() => navigator.clipboard.writeText(address)} />
+      <div className="text-center md:flex md:justify-start md:items-center mt-0">
+      <h1 className="text-2xl md:text-4xl font-bold my-2">{tokenData ? tokenData.name : ''}</h1>
+      <div className="flex justify-center items-center gap-2">
+        <p className="text-gray-700 text-sm md:text-base">{shortAddress}</p>
+        <DocumentDuplicateIcon className="h-5 w-5 cursor-pointer" onClick={() => navigator.clipboard.writeText(address)} />
+      </div>
+      </div>
+      <div className="p-4">
+      <div className="flex flex-wrap gap-2 justify-start items-center">
+        <div className="flex items-center border border-black">
+          <span className="px-3 py-1">Nebula score 75/100</span>
         </div>
-      </div> 
-      <div className="flex justify-items-start items-center text-gray p-4">
-        <div className="flex items-center border border-black mr-2">
-          <span className="mx-2 py-1 px-3">Nebula score 75/100</span>
-          </div>
-        <div className="flex items-center border border-black mr-2">
-          <span className="mx-2 py-1 px-3">Contract code</span>
+        <div className="flex items-center border border-black" onClick={openModal}>
+          <span className="px-3 py-1">Contract code</span>
         </div>
-        <div className="flex items-center border border-black mr-2">
-          <span className="mx-2 bg-gray-500 py-1 px-3">Attention Required 3</span>
-        </div>
-        <div className="flex items-center border border-black mr-2">
-          <button className="mx-2 py-1 px-3 ">Explorer</button>
+        <div className="flex items-center border border-black bg-gray-500">
+          <span className="px-3 py-1">Attention Required 3</span>
         </div>
         <div className="flex items-center border border-black">
-          <button className="mx-2 py-1 px-3 ">Share</button>
+          <button className="px-3 py-1">Explorer</button>
         </div>
+        <div className="flex items-center border border-black">
+          <button className="px-3 py-1">Share</button>
+        </div>
+        <Modal isOpen={isModalOpen} closeModal={closeModal}>
+        <pre className="overflow-x-auto p-3 bg-gray-100 rounded">{dummyContractCode}</pre>
+      </Modal>
+      </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 ">
           <div className="md:col-span-2 ">

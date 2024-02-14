@@ -1,4 +1,4 @@
-interface ContractApiResponse {
+interface ContractAddressApiResponse {
     address: string;
     blockNumber: number;
     isAccount: boolean;
@@ -16,4 +16,22 @@ interface ContractApiResponse {
     tokenName: string;
     tokenSymbol: string;
 }
-export default ContractApiResponse;
+interface ContractHashApiResponse{
+    hash: string
+    transactionHash: string
+    type: number
+    creationTimestamp: number
+    verifiedTimestamp: number | null
+    classAlias: string | null
+    version: string
+    byteCode: [string]
+    abi: {
+    }
+    code: {
+    }
+    license: string
+    contractsCount: string
+    declaredBy: string
+    isAccount: boolean
+    }
+export type {ContractAddressApiResponse, ContractHashApiResponse};

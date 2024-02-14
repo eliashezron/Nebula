@@ -1,10 +1,10 @@
-import ContractApiResponse  from '@/types/apiInterfaces'; 
+import {ContractAddressApiResponse}  from '@/types/apiInterfaces'; 
 import supabase from '@/config/supabaseClient';
 import { Database } from '@/types/supabase';
 
 type TokenInfoRow = Database['public']['Tables']['tokenInfo']['Row'];
 
-async function saveContractInfoToSupabase(data: ContractApiResponse): Promise<void> {
+async function saveContractInfoToSupabase(data: ContractAddressApiResponse): Promise<void> {
     
     const { error } = await supabase
     .from('tokenInfo')
