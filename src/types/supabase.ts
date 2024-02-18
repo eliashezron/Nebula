@@ -13,62 +13,65 @@ export type Database = {
         Row: {
           address: string | null
           chain: string | null
-          circulation: string | null
+          circulation: number | null
           classHash: string | null
-          highRisks: string | null
-          holders: string | null
+          highRisks: number | null
+          holders: number | null
           id: number
           isAccount: boolean | null
           isERC20: boolean | null
           isProxy: boolean | null
-          liquidity: string | null
-          lowRisks: string | null
+          liquidity: number | null
+          lowRisks: number | null
           name: string
-          price: string | null
+          price: number | null
           safetyScore: string | null
           symbol: string | null
           topHoldersPercentage: string | null
-          tvl: string | null
+          tvl: number | null
+          views: number | null
         }
         Insert: {
           address?: string | null
           chain?: string | null
-          circulation?: string | null
+          circulation?: number | null
           classHash?: string | null
-          highRisks?: string | null
-          holders?: string | null
+          highRisks?: number | null
+          holders?: number | null
           id?: number
           isAccount?: boolean | null
           isERC20?: boolean | null
           isProxy?: boolean | null
-          liquidity?: string | null
-          lowRisks?: string | null
+          liquidity?: number | null
+          lowRisks?: number | null
           name: string
-          price?: string | null
+          price?: number | null
           safetyScore?: string | null
           symbol?: string | null
           topHoldersPercentage?: string | null
-          tvl?: string | null
+          tvl?: number | null
+          views?: number | null
         }
         Update: {
           address?: string | null
           chain?: string | null
-          circulation?: string | null
+          circulation?: number | null
           classHash?: string | null
-          highRisks?: string | null
-          holders?: string | null
+          highRisks?: number | null
+          holders?: number | null
           id?: number
           isAccount?: boolean | null
           isERC20?: boolean | null
           isProxy?: boolean | null
-          liquidity?: string | null
-          lowRisks?: string | null
+          liquidity?: number | null
+          lowRisks?: number | null
           name?: string
-          price?: string | null
+          price?: number | null
           safetyScore?: string | null
           symbol?: string | null
           topHoldersPercentage?: string | null
-          tvl?: string | null
+          tvl?: number | null
+          views?: number | null
         }
         Relationships: []
       }
