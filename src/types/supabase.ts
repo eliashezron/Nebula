@@ -21,6 +21,7 @@ export type Database = {
           isAccount: boolean | null
           isERC20: boolean | null
           isProxy: boolean | null
+          isRisky: boolean | null
           liquidity: number | null
           lowRisks: number | null
           name: string
@@ -42,6 +43,7 @@ export type Database = {
           isAccount?: boolean | null
           isERC20?: boolean | null
           isProxy?: boolean | null
+          isRisky?: boolean | null
           liquidity?: number | null
           lowRisks?: number | null
           name: string
@@ -63,6 +65,7 @@ export type Database = {
           isAccount?: boolean | null
           isERC20?: boolean | null
           isProxy?: boolean | null
+          isRisky?: boolean | null
           liquidity?: number | null
           lowRisks?: number | null
           name?: string

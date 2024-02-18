@@ -1,11 +1,13 @@
 // src/components/StatisticsSection.tsx
 'use client'
-import { getNumberContractsScanned, getTotalIssuesFound } from '@/utils/supabaseFunctions';
+import { getNumberContractsScanned,getCountOfRiskyTokens, getTotalIssuesFound } from '@/utils/supabaseFunctions';
+import { get } from 'http';
 import React, {useEffect, useState} from 'react';
 
 const StatisticsSection: React.FC = () => {
     const [contractsScanned, setContractsScanned] = useState<number>(0);
     const [issuesFound, setIssuesFound] = useState<number>(0);
+    const [riskTokensDetected, setRiskTokensDetected] = useState<number>(0);
 
     useEffect(() => {
         getNumberContractsScanned().then((data) => {
@@ -14,12 +16,15 @@ const StatisticsSection: React.FC = () => {
         getTotalIssuesFound().then((data) => {
             setIssuesFound(data);
         });
+        getCountOfRiskyTokens().then((data) => {
+            setRiskTokensDetected(data);
+        });
     }, []);
   // Here you would fetch or define the statistics data
   const stats = [
     { label: 'TOTAL CONTRACTS SCANNED', value: contractsScanned ? contractsScanned : '' },
     { label: 'TOTAL ISSUES FOUND', value: issuesFound ? issuesFound : '0' },
-    { label: 'RISK TOKENS DETECTED', value: '1.8M' },
+    { label: 'RISK TOKENS DETECTED', value: riskTokensDetected ? riskTokensDetected : '0' },
     // { label: 'EXPLOITS IN CRYPTO', value: '$79,390,221,652' },
     // Add more statistics if needed
   ];

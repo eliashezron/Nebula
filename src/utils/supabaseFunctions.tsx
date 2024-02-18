@@ -127,5 +127,20 @@ async function getTotalIssuesFound(): Promise<number> {
   return totalIssues;
 }
 
+async function getCountOfRiskyTokens(): Promise<number> {
+  const { data, error, count } = await supabase
+    .from('tokenInfo') // Replace with your actual table name
+    .select('isRisky', { count: 'exact' })
+    .eq('isRisky', true);
 
-export {saveContractInfoToSupabase, addressExists, fetchTokenDetails, fetchTokensOrderedByMarketCap, fetchTokensOrderedByViews, getNumberContractsScanned, getTotalIssuesFound};
+  if (error) {
+    console.error('Error fetching risky tokens count:', error.message);
+    throw error; // Throw the error to be handled by the calling function
+  }
+
+  // The count is returned as part of the query when using { count: 'exact' }
+  return count || 0;
+}
+
+
+export {saveContractInfoToSupabase, addressExists, fetchTokenDetails, fetchTokensOrderedByMarketCap, fetchTokensOrderedByViews, getNumberContractsScanned, getTotalIssuesFound, getCountOfRiskyTokens};
