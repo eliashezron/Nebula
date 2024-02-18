@@ -13,7 +13,6 @@ const Home: React.FC = () => {
       <Scanner />
       <div className="container mx-auto my-8">
         <StatisticsSection/>
-        <FilterBar/>
         <AuditRisk />
       </div>
     </div>
