@@ -1,4 +1,3 @@
-// src/pages/tokenInfo/[symbol].tsx
 'use client'
 import React,{useState, useEffect, use} from 'react';
 import { useRouter } from 'next/navigation'
@@ -150,7 +149,7 @@ contract MyContract {
                 <div className="bg-gray-100 p-4 rounded-lg">
                     <div className="flex justify-between items-center mb-2">
                         <span>Token Type</span>
-                        <span>ERC20</span> {/* Replace with actual data */}
+                        <span>ERC20</span>
                     </div>
                     <div className="flex justify-between items-center mb-2">
                         <span>Contract Address</span>

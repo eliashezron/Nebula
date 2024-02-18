@@ -1,4 +1,3 @@
-// src/components/AuditRiskTable.tsx
 'use client'
 import React from 'react';
 import Link from 'next/link';
@@ -9,12 +8,10 @@ import starknetLogo from '@/assets/starknetLogo.png';
 import FilterBar from './filter';
 
 const AuditRiskTable: React.FC = () => {
-  // Define the type for a single token info row
   type TokenInfoRow = Database['public']['Tables']['tokenInfo']['Row'];
   const [fetchError, setFetchError] = useState<string | null>(null);
   const [tokenData, setTokenData] = useState<TokenInfoRow[]>([]);
-    // Add a state for the active filter
-    const [activeFilter, setActiveFilter] = useState('');
+  const [activeFilter, setActiveFilter] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const tokensPerPage = 10;
   const indexOfLastToken = currentPage * tokensPerPage;
@@ -28,7 +25,7 @@ const AuditRiskTable: React.FC = () => {
   useEffect(() => {
     const fetchTokens = async () => {
       const { data, error } = await supabase
-      .from('tokenInfo') // Specify the type when calling 'from'
+      .from('tokenInfo')
       .select('*');
 
       if (error) {
@@ -43,7 +40,6 @@ const AuditRiskTable: React.FC = () => {
 
 
   useEffect(() => {
-    // Fetch tokens with active filter applied
     const fetchTokens = async () => {
       let query = supabase.from('tokenInfo').select('*');
 
@@ -56,20 +52,18 @@ const AuditRiskTable: React.FC = () => {
       if (activeFilter === 'recentThreats') {
         query = query.order('views', { ascending: false });
       }
-      // Add more conditions for other filters
 
       const { data, error } = await query;
       if (error) {
-        // handle error
+        setFetchError(error.message);
       } else {
         setTokenData(data);
       }
     };
 
     fetchTokens();
-  }, [activeFilter]); // Refetch when activeFilter changes
+  }, [activeFilter]);
 
-  // Define the handler function for filter changes
   const handleFilterChange = (filter: string) => {
     setActiveFilter(filter);
   };

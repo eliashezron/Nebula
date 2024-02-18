@@ -1,4 +1,3 @@
-// pages/index.tsx
 import React from 'react';
 import Header from '../components/header';
 import AuditRisk from '../components/auditRisk';
