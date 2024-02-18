@@ -8,7 +8,7 @@ import ScannerHeading from '@/components/scannerHeading';
 
 const Home: React.FC = () => {
   return (
-    <div className="bg-none min-h-screen text-black container mx-auto">
+    <div className="bg-none min-h-screen text-black container mx-auto p-4">
       <Header />
       <ScannerHeading/>
       <Scanner />
