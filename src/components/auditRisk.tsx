@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import supabase from '@/config/supabaseClient';
 import { Database } from '@/types/supabase';
+import starknetLogo from '@/assets/starknetLogo.png';
 
 const AuditRiskTable: React.FC = () => {
   // Define the type for a single token info row
@@ -64,6 +65,7 @@ const AuditRiskTable: React.FC = () => {
             {/* Subheaders */}
             <th className="border border-black px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
             <th className="border border-black px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Token Info</th>
+            <th className="border border-black px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">chain</th>
             <th className="border border-black px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Safety Score</th>
             <th className="border border-black px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
             <th className="border border-black px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Liquidity</th>
@@ -85,6 +87,7 @@ const AuditRiskTable: React.FC = () => {
                   <span>{token.name} ({token.symbol})</span>
             </Link>
             </td>
+              <td className="border border-black px-6 py-4 whitespace-nowrap text-sm text-gray-500"><img src='starknetLogo.svg' alt="StarkNet Logo" className="h-50 w-50" /></td>
               <td className="border border-black px-6 py-4 whitespace-nowrap text-sm text-gray-500">{token.safetyScore}</td>
               <td className="border border-black px-6 py-4 whitespace-nowrap text-sm text-gray-500">{token.price}</td>
               <td className="border border-black px-6 py-4 whitespace-nowrap text-sm text-gray-500">{token.liquidity}</td>

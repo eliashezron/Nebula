@@ -3,6 +3,8 @@ import React from 'react';
 import Header from '../components/header';
 import AuditRisk from '../components/auditRisk';
 import Scanner from '../components/contractScan';
+import StatisticsSection from '@/components/statistics';
+import FilterBar from '@/components/filter';
 
 const Home: React.FC = () => {
   return (
@@ -10,6 +12,8 @@ const Home: React.FC = () => {
       <Header />
       <Scanner />
       <div className="container mx-auto my-8">
+        <StatisticsSection/>
+        <FilterBar/>
         <AuditRisk />
       </div>
     </div>
