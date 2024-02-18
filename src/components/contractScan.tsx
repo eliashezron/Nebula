@@ -34,7 +34,7 @@ const Scanner: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center my-12 w-full px-4">
+    <div className="flex flex-col justify-center items-start my-3 w-full">
       <div className="flex w-full md:w-2/3 lg:w-1/2 xl:w-2/3 border-2 border-gray-300 rounded-lg overflow-hidden">
         <input
           className="pl-4 pr-3 pt-4 pb-4 py-2 flex-grow"
