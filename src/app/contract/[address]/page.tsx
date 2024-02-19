@@ -36,20 +36,45 @@ const [selectedRisk, setSelectedRisk] = useState<string | null>(null);
   // Dummy risk data
   const riskCategories = {
     'High risk': [
-      { title: "No previous scams by owner's wallet found", details: 'Lorem ipsum dolor sit amet...' },
-      { title: "Smart contract's transfer function secure with unchangeable router", details: 'Consectetur adipiscing elit...' },
-      { title: 'No significant liquidity rugpull risk found', details: 'Sed do eiusmod tempor incididunt...' },
+      { 
+        title: "No previous scams by owner's wallet found",
+        details: 'The wallet associated with the contract owner has no history of fraudulent activities or associated scams, indicating a lower risk of malicious intent.' 
+      },
+      { 
+        title: "Smart contract's transfer function secure with unchangeable router",
+        details: 'The transfer function within the smart contract is securely implemented with a fixed router, ensuring that the pathway for token transfers cannot be altered or hijacked.' 
+      },
+      { 
+        title: 'No significant liquidity rugpull risk found',
+        details: 'Analysis indicates minimal risk of a rugpull event, where liquidity could be suddenly withdrawn by developers or large holders, destabilizing the token’s market.' 
+      },
     ],
     'Moderate risk': [
-      { title: 'Users can always transfer their tokens', details: 'Ut labore et dolore magna aliqua...' },
-      { title: 'The contract operates without custom fees', details: 'Ut enim ad minim veniam...' },
+      { 
+        title: 'Users can always transfer their tokens',
+        details: 'The smart contract permits uninterrupted token transfers, enabling users to send or receive tokens without encountering unexpected restrictions.' 
+      },
+      { 
+        title: 'The contract operates without custom fees',
+        details: 'This contract does not impose additional fees on transactions, which can foster a transparent and user-friendly environment for participants.' 
+      },
     ],
     'Low risk': [
-      { title: 'No locks detected', details: 'Quis nostrud exercitation ullamco laboris...' },
-      { title: 'Contract cannot be upgraded', details: 'Nisi ut aliquip ex ea commodo consequat...' },
-      { title: 'Contract was not deployed', details: 'Duis aute irure dolor in reprehenderit...' },
+      { 
+        title: 'No locks detected',
+        details: 'Our audit did not detect any time-based locks or similar mechanisms that could restrict token movement or smart contract interactions over a set period.' 
+      },
+      { 
+        title: 'Contract cannot be upgraded',
+        details: 'The contract is not upgradable, meaning its logic is immutable and cannot be changed post-deployment, which can be both a security feature and a limitation.' 
+      },
+      { 
+        title: 'Contract was not deployed',
+        details: 'The contract code exists but has not been deployed to the blockchain, suggesting it is in a development or testing phase with no active economic impact.' 
+      },
     ],
   };
+  
 
   const handleRiskSelection = (title: string) => {
     setSelectedRisk(selectedRisk === title ? null : title);
@@ -106,12 +131,12 @@ mod MyToken {
     <div className="container bg-none min-h-screen mx-auto p-3">
       <div className="flex justify-between items-center mb-1">
         <button onClick={goBack} className="text-gray-900 hover:text-blue-900 font-bold text-2xl md:text-xl flex">
-          <ChevronLeftIcon className="h-5 w-5 text-4xl mr-2 mt-1" /> <p className='mr-5 md:mr-1'>Back</p>
+          <ChevronLeftIcon className="h-5 w-5 text-4xl mr-2 mt-1" /> <p className='mr-4'>Back</p>
         </button>
         <Scanner/>
       </div>
       <div className="text-center md:flex md:justify-start md:items-center mt-0">
-      <h1 className="text-2xl md:text-4xl font-bold my-2">{tokenData ? tokenData.name : ''}</h1>
+      <h1 className="text-2xl md:text-4xl font-bold my-2 mr-5">{tokenData ? tokenData.name : ''}</h1>
       <div className="flex justify-center items-center gap-2">
         <p className="text-gray-700 text-sm md:text-base">{shortAddress}</p>
         <div className="text-right">
