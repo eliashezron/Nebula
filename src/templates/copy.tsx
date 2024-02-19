@@ -23,7 +23,7 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = ({ textToCopy }) => {
     <div className="relative">
       <DocumentDuplicateIcon className="h-6 w-6 cursor-pointer" onClick={handleCopy} />
       {isCopied && (
-        <div className="absolute -bottom-4 left-0 bg-gray-100 text-black text-xs px-2 py-1 rounded">
+        <div className="absolute-bottom-4 left-0 bg-gray-100 text-black text-xs px-2 py-1 rounded">
           Copied
         </div>
       )}

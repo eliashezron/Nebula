@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import supabase from '@/config/supabaseClient';
 import { Database } from '@/types/supabase';
-import starknetLogo from '@/assets/starknetLogo.png';
 import FilterBar from './filter';
 
 const AuditRiskTable: React.FC = () => {

@@ -15,6 +15,8 @@ export type Database = {
           chain: string | null
           circulation: number | null
           classHash: string | null
+          code: Json | null
+          creationTimestamp: number | null
           highRisks: number | null
           holders: number | null
           id: number
@@ -37,6 +39,8 @@ export type Database = {
           chain?: string | null
           circulation?: number | null
           classHash?: string | null
+          code?: Json | null
+          creationTimestamp?: number | null
           highRisks?: number | null
           holders?: number | null
           id?: number
@@ -59,6 +63,8 @@ export type Database = {
           chain?: string | null
           circulation?: number | null
           classHash?: string | null
+          code?: Json | null
+          creationTimestamp?: number | null
           highRisks?: number | null
           holders?: number | null
           id?: number

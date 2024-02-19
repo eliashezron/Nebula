@@ -1,4 +1,4 @@
-import {ContractAddressApiResponse}  from '@/types/apiInterfaces'; 
+import {ContractAddressApiResponse, ContractHashApiResponse}  from '@/types/apiInterfaces'; 
 import supabase from '@/config/supabaseClient';
 import { Database } from '@/types/supabase';
 
@@ -17,12 +17,43 @@ async function saveContractInfoToSupabase(data: ContractAddressApiResponse): Pro
         name: data.tokenName,
         symbol: data.tokenSymbol,
         classHash: data.classHash,
+        creationTimestamp: data.creationTimestamp,
       },
     ]);
 
   if (error) {
     throw new Error('Failed to save contract info to Supabase');
   }
+}
+async function saveContractCodeToSupabase(data: ContractHashApiResponse): Promise<void> {
+  if (Object.keys(data.abi).length === 0) {
+    console.error('No contract code to save');
+    return; // Exit early if there is no code
+  }
+  console.log('this is tha data,abi',data.abi);
+  const { data : existingData , error } = await supabase
+  .from('tokenInfo')
+  .select('classHash')
+  .eq('classHash', data.hash)
+  .single();
+  if (error) {
+    throw new Error('Failed to save contract code to Supabase');
+  }
+  if(existingData){
+        // If the row exists, update the code column
+        const { error: updateError } = await supabase
+        .from('tokenInfo')
+        .update({ code: data.abi }) // Assume 'data.code' contains the contract code
+        .eq('classHash', data.hash)
+  
+      if (updateError) {
+        console.error('Error updating contract code:', updateError);
+        throw new Error('Failed to update contract code');
+      }
+    } else {
+      // Optionally, handle the case where no matching classHash is found
+      console.error('No token found with the given classHash');
+    }
 }
 async function addressExists(address: string): Promise<boolean> {
   const { data, error, count  } = await supabase
@@ -143,4 +174,4 @@ async function getCountOfRiskyTokens(): Promise<number> {
 }
 
 
-export {saveContractInfoToSupabase, addressExists, fetchTokenDetails, fetchTokensOrderedByMarketCap, fetchTokensOrderedByViews, getNumberContractsScanned, getTotalIssuesFound, getCountOfRiskyTokens};
+export {saveContractInfoToSupabase, addressExists, fetchTokenDetails, fetchTokensOrderedByMarketCap, fetchTokensOrderedByViews, getNumberContractsScanned, getTotalIssuesFound, getCountOfRiskyTokens, saveContractCodeToSupabase};

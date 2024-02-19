@@ -59,10 +59,43 @@ const [selectedRisk, setSelectedRisk] = useState<string | null>(null);
   const shortClassHash = shortenAddress(classHash);
 
   const [isModalOpen, setModalOpen] = useState(false);
-  const dummyContractCode = `pragma solidity ^0.8.0;
+  const dummyContractCode = `
+  //THIS IS DUMMY ERC20 CONTRACT CODE
+  #[starknet::contract]
+mod MyToken {
+    use openzeppelin::token::erc20::ERC20Component;
+    use starknet::ContractAddress;
 
-contract MyContract {
-  // Your contract code goes here
+    component!(path: ERC20Component, storage: erc20, event: ERC20Event);
+
+    #[abi(embed_v0)]
+    impl ERC20Impl = ERC20Component::ERC20Impl<ContractState>;
+    #[abi(embed_v0)]
+    impl ERC20MetadataImpl = ERC20Component::ERC20MetadataImpl<ContractState>;
+    impl ERC20InternalImpl = ERC20Component::InternalImpl<ContractState>;
+
+    #[storage]
+    struct Storage {
+        #[substorage(v0)]
+        erc20: ERC20Component::Storage
+    }
+
+    #[event]
+    #[derive(Drop, starknet::Event)]
+    enum Event {
+        #[flat]
+        ERC20Event: ERC20Component::Event
+    }
+
+    #[constructor]
+    fn constructor(ref self: ContractState, initial_supply: u256, recipient: ContractAddress) {
+        let name = 'Test USDT';
+        let symbol = 'TUSDT';
+
+        self.erc20.initializer(name, symbol);
+        self.erc20._mint(recipient, initial_supply);
+    }
+}
 }`;
 
   const openModal = () => setModalOpen(true);
@@ -72,8 +105,8 @@ contract MyContract {
   return (
     <div className="container bg-none min-h-screen mx-auto p-3">
       <div className="flex justify-between items-center mb-1">
-        <button onClick={goBack} className="text-gray-900 hover:text-blue-900 font-bold text-2xl flex">
-          <ChevronLeftIcon className="h-5 w-5 text-4xl mr-2 mt-1" /> <p>Back</p>
+        <button onClick={goBack} className="text-gray-900 hover:text-blue-900 font-bold text-2xl md:text-xl flex">
+          <ChevronLeftIcon className="h-5 w-5 text-4xl mr-2 mt-1" /> <p className='mr-5 md:mr-1'>Back</p>
         </button>
         <Scanner/>
       </div>
