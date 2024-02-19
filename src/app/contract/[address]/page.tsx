@@ -1,37 +1,70 @@
 'use client'
-import React,{useState, useEffect, use} from 'react';
+import React,{useState, useEffect} from 'react';
 import { useRouter } from 'next/navigation'
-import {ChevronDownIcon, ChevronUpIcon, ChevronLeftIcon, DocumentDuplicateIcon, ShareIcon, GlobeAltIcon, CodeIcon } from '@heroicons/react/outline'; 
+import {ChevronDownIcon, ChevronUpIcon, ChevronLeftIcon, ShareIcon, GlobeAltIcon, CodeIcon } from '@heroicons/react/outline'; 
 import { Database } from '@/types/supabase';
-import { fetchTokenDetails } from '@/utils/supabaseFunctions';
+import {addressExists, saveContractInfoToSupabase,fetchTokenDetails} from '@/utils/supabaseFunctions';
+import { fetchContractInfo} from '@/utils/apiFunctions';
 import Scanner from '../../../components/contractScan';
 import { shortenAddress } from '@/helpers/methods';
 import Modal from '../../../templates/modal';
 import CopyToClipboard from '@/templates/copy';
+import ClimbingBoxLoader from '@/templates/climbingBoxLoader';
 
 export default function Page({ params }: { params: { address: string } }) {
-    const router = useRouter();
-    type TokenInfoRow = Database['public']['Tables']['tokenInfo']['Row'];
-    const [tokenData, setTokenData] = useState<TokenInfoRow | null>(null);
-    const [classHash, setClassHash] = useState<string>('');
-    const address = params.address;
-    useEffect(() => {
-      if (!address) return;
-      fetchTokenDetails(address).then((data) => {
-        setTokenData(data);
-        console.log('logging the data', data);
-        if (data && data.classHash) {
-          setClassHash(data.classHash);
+  const router = useRouter();
+  type TokenInfoRow = Database['public']['Tables']['tokenInfo']['Row'];
+  const [tokenData, setTokenData] = useState<TokenInfoRow | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasSaved, setHasSaved] = useState(false);
+  const [selectedRisk, setSelectedRisk] = useState<string | null>(null);
+  function sleep(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  const address = params.address;
+  useEffect(() => {
+    async function fetchData() {
+      if (!address || hasSaved) return;
+  
+      setIsLoading(true);
+      try {
+        const exists = await addressExists(address);
+        if (!exists) {
+          const contractInfo = await fetchContractInfo(address);
+          await saveContractInfoToSupabase(contractInfo);
+          setHasSaved(true); // Set flag to true after saving
+          console.log('Contract info saved to Supabase');
         }
-
-      });
-    }, [address]);
-    console.log('logging the token data here', tokenData?.isAccount);
+        await sleep(1000); // Simulate a delay
+        await fetchTokenDetails(address).then((data) => {
+          setTokenData(data);
+        });
+      } catch (error) {
+        console.error('An error occurred:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  
+    fetchData();
+  }, [address, hasSaved]);
     
-const [selectedRisk, setSelectedRisk] = useState<string | null>(null);
+
   const goBack = () => {
     router.push('/');
   };
+
+  const handleRiskSelection = (title: string) => {
+    setSelectedRisk(selectedRisk === title ? null : title);
+  };
+
+  const shortAddress = shortenAddress(address);
+  const shortClassHash = shortenAddress(tokenData?.classHash || '');
+
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
 
   // Dummy risk data
   const riskCategories = {
@@ -75,15 +108,6 @@ const [selectedRisk, setSelectedRisk] = useState<string | null>(null);
     ],
   };
   
-
-  const handleRiskSelection = (title: string) => {
-    setSelectedRisk(selectedRisk === title ? null : title);
-  };
-
-  const shortAddress = shortenAddress(address);
-  const shortClassHash = shortenAddress(classHash);
-
-  const [isModalOpen, setModalOpen] = useState(false);
   const dummyContractCode = `
   //THIS IS DUMMY ERC20 CONTRACT CODE
   #[starknet::contract]
@@ -123,10 +147,11 @@ mod MyToken {
 }
 }`;
 
-  const openModal = () => setModalOpen(true);
-  const closeModal = () => setModalOpen(false);
-  
-
+if (!tokenData && isLoading) {
+  return <div className="flex justify-center items-center h-screen">
+    <ClimbingBoxLoader color="#36d7b7" />
+  </div>;
+}
   return (
     <div className="container bg-none min-h-screen mx-auto p-3">
       <div className="flex justify-between items-center mb-1">
@@ -223,7 +248,7 @@ mod MyToken {
                         <div className="flex items-center">
                             <span>{shortClassHash}</span>
                             <div className="text-right">
-                              <CopyToClipboard textToCopy={classHash} />
+                              <CopyToClipboard textToCopy={tokenData?.classHash || ''} />
                             </div>
                         </div>
                     </div>

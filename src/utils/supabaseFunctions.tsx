@@ -24,6 +24,7 @@ async function saveContractInfoToSupabase(data: ContractAddressApiResponse): Pro
   if (error) {
     throw new Error('Failed to save contract info to Supabase');
   }
+  return 
 }
 async function saveContractCodeToSupabase(data: ContractHashApiResponse): Promise<void> {
   if (Object.keys(data.abi).length === 0) {

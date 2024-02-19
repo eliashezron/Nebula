@@ -1,30 +1,14 @@
 'use client'
 import React, { useState } from 'react';
 import { SearchIcon } from '@heroicons/react/solid';
-import {fetchContractInfo }from '@/utils/apiFunctions';
-import {saveContractInfoToSupabase, addressExists, saveContractCodeToSupabase} from '@/utils/supabaseFunctions';
 import { useRouter } from 'next/navigation'
 
 const Scanner: React.FC = () => {
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState('');
 
-  const handleSearch = async() => {
-    console.log(`Search for: ${searchTerm}`);
-    try {
-      const contractInfo = await fetchContractInfo(searchTerm);  
-      const exists = await addressExists(contractInfo.address);
-      if (exists) {
-        console.log('Address already exists in the database.');
-        router.push(`/contract/${contractInfo.address}`);
-      } else {
-        await saveContractInfoToSupabase(contractInfo);
-        console.log('Contract info saved to Supabase');
-        router.push(`/contract/${contractInfo.address}`);
-      }
-    } catch (error) {
-      console.error(error);
-    }
+  const handleSearch = async() => { 
+    router.push(`/contract/${searchTerm}`);
   };
 
   const handleKeyPress = (event: React.KeyboardEvent) => {

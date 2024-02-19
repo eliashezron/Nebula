@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import supabase from '@/config/supabaseClient';
 import { Database } from '@/types/supabase';
 import FilterBar from './filter';
-
+import {GlobeAltIcon} from '@heroicons/react/outline';
 const AuditRiskTable: React.FC = () => {
   type TokenInfoRow = Database['public']['Tables']['tokenInfo']['Row'];
   const [fetchError, setFetchError] = useState<string | null>(null);
@@ -81,7 +81,7 @@ const AuditRiskTable: React.FC = () => {
             <th colSpan={1} className="border border-black px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Liquidity
             </th>
-            <th colSpan={2} className="border border-black px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th colSpan={2} className="border border-black px-5 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Circulation
             </th>
             <th colSpan={2} className="border border-black px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -99,7 +99,7 @@ const AuditRiskTable: React.FC = () => {
             <th className="border border-black px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Safety Score</th>
             <th className="border border-black px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
             <th className="border border-black px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Liquidity</th>
-            <th className="border border-black px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Circulation</th>
+            <th className="border border-black px-5 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Circulation</th>
             <th className="border border-black px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TVL</th>
             <th className="border border-black px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">High Risks</th>
             <th className="border border-black px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">low Risks</th>
@@ -117,18 +117,19 @@ const AuditRiskTable: React.FC = () => {
                   <span>{token.name} ({token.symbol})</span>
             </Link>
             </td>
-              <td className="border border-black px-6 py-4 whitespace-nowrap text-sm text-gray-500"><img src='starknetLogo.svg' alt="StarkNet Logo" className="h-50 w-50" /></td>
-              <td className="border border-black px-6 py-4 whitespace-nowrap text-sm text-gray-500">{token.safetyScore}</td>
-              <td className="border border-black px-6 py-4 whitespace-nowrap text-sm text-gray-500">{token.price}</td>
-              <td className="border border-black px-6 py-4 whitespace-nowrap text-sm text-gray-500">{token.liquidity}</td>
-              <td className="border border-black px-6 py-4 whitespace-nowrap text-sm text-gray-500">{token.holders}</td>
-              <td className="border border-black px-6 py-4 whitespace-nowrap text-sm text-gray-500">{token.tvl}</td>
-              <td className="border border-black px-6 py-4 whitespace-nowrap text-sm text-gray-500">{token.highRisks}</td>
-              <td className="border border-black px-6 py-4 whitespace-nowrap text-sm text-gray-500">{token.lowRisks}</td>
+              <td className="border border-black px-5 py-4 whitespace-nowrap text-sm text-gray-500"><img src='starknetLogo.svg' alt="StarkNet Logo" className="h-50 w-50" /></td>
+              <td className="border border-black px-5 py-4 whitespace-nowrap text-sm text-gray-500">{token.safetyScore}</td>
+              <td className="border border-black px-5 py-4 whitespace-nowrap text-sm text-gray-500">{token.price}</td>
+              <td className="border border-black px-5 py-4 whitespace-nowrap text-sm text-gray-500">{token.liquidity}</td>
+              <td className="border border-black px-5 py-4 whitespace-nowrap text-sm text-gray-500">{token.holders}</td>
+              <td className="border border-black px-5 py-4 whitespace-nowrap text-sm text-gray-500">{token.tvl}</td>
+              <td className="border border-black px-5 py-4 whitespace-nowrap text-sm text-gray-500">{token.highRisks}</td>
+              <td className="border border-black px-5 py-4 whitespace-nowrap text-sm text-gray-500">{token.lowRisks}</td>
                             {/* Action cell */}
                 <td className=" border border-black px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <a href={`https://voyager.online/contract/${token.address}`} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:text-indigo-900">
-                  View on Explorer
+                <a href={`https://voyager.online/contract/${token.address}`} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:text-indigo-900 flex">
+                  <span className='mr-1'>view</span>
+                  <GlobeAltIcon className="h-5 w-5" />
                 </a>
               </td>
             </tr>
