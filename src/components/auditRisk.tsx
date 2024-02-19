@@ -81,7 +81,7 @@ const AuditRiskTable: React.FC = () => {
             <th colSpan={1} className="border border-black px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Liquidity
             </th>
-            <th colSpan={2} className="border border-black px-5 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th colSpan={2} className="border border-black px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Circulation
             </th>
             <th colSpan={2} className="border border-black px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
