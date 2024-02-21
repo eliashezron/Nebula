@@ -13,12 +13,16 @@ const AuditRiskTable: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const tokensPerPage = 10;
+  const maxPage = Math.ceil(tokenData.length / tokensPerPage);
   const indexOfLastToken = currentPage * tokensPerPage;
   const indexOfFirstToken = indexOfLastToken - tokensPerPage;
   const currentTokens = tokenData.slice(indexOfFirstToken, indexOfLastToken);
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
   const goToNextPage = () => setCurrentPage((prev) => (prev < Math.ceil(tokenData.length / tokensPerPage) ? prev + 1 : prev));
   const goToPreviousPage = () => setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev));
+  const startPage = Math.max(currentPage - 1, 1);
+  const endPage = Math.min(startPage + 2, maxPage);
+  const paginationRange = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
 
 
   useEffect(() => {
@@ -141,17 +145,17 @@ const AuditRiskTable: React.FC = () => {
           Previous
         </button>
 
-        {Array.from({ length: Math.ceil(tokenData.length / tokensPerPage) }, (_, index) => (
+        {paginationRange.map((pageNum) => (
           <button
-            key={index}
-            onClick={() => paginate(index + 1)}
-            className={`px-4 py-2 mx-1 rounded-md ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-white text-blue-500'}`}
+            key={pageNum}
+            onClick={() => paginate(pageNum)}
+            className={`px-4 py-2 mx-1 rounded-md ${currentPage === pageNum ? 'bg-blue-500 text-white' : 'bg-white text-blue-500'}`}
           >
-            {index + 1}
+            {pageNum}
           </button>
         ))}
 
-        <button onClick={goToNextPage} disabled={currentPage === Math.ceil(tokenData.length / tokensPerPage)} className="px-4 py-2 mx-1 rounded-md bg-gray-500 text-white disabled:bg-gray-200">
+        <button onClick={goToNextPage} disabled={currentPage === maxPage} className="px-4 py-2 mx-1 rounded-md bg-gray-500 text-white disabled:bg-gray-200">
           Next
         </button>
       </div>
