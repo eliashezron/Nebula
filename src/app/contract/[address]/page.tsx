@@ -238,10 +238,6 @@ if (!tokenData && isLoading) {
                 <h2 className="text-xl font-bold mb-4">Basic Token Info</h2>
                 <div className="bg-gray-100 p-4 rounded-lg">
                     <div className="flex justify-between items-center mb-2">
-                        <span>Token Type</span>
-                        <span>ERC20</span>
-                    </div>
-                    <div className="flex justify-between items-center mb-2">
                         <span>Contract Address</span>
                         <div className="flex items-center">
                             <span>{shortAddress}</span>
