@@ -189,7 +189,7 @@ if (!tokenData && isLoading) {
           <span className="px-3 py-1">Attention Required 3</span>
         </div>
         <div className="flex items-center border border-black">
-          <button className="px-3 py-1"><GlobeAltIcon className="h-5 w-5"></GlobeAltIcon></button>
+          <a href={`https://starkscan.co/contract/${address}`} target="_blank" rel="noopener noreferrer"  className="px-3 py-1"><GlobeAltIcon className="h-5 w-5"></GlobeAltIcon></a>
         </div>
         <div className="flex items-center border border-black">
           <button className="px-3 py-1"><ShareIcon className="h-5 w-5" ></ShareIcon></button>
