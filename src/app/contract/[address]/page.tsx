@@ -10,6 +10,7 @@ import { shortenAddress } from '@/helpers/methods';
 import Modal from '../../../templates/modal';
 import CopyToClipboard from '@/templates/copy';
 import ClimbingBoxLoader from '@/templates/climbingBoxLoader';
+import Header from '@/components/header';
 
 export default function Page({ params }: { params: { address: string } }) {
   const router = useRouter();
@@ -148,11 +149,17 @@ mod MyToken {
 }`;
 
 if (!tokenData && isLoading) {
-  return <div className="flex justify-center items-center h-screen">
-    <ClimbingBoxLoader color="#36d7b7" />
-  </div>;
+  return (
+  <div className="bg-none min-h-screen text-black container mx-auto p-4">
+     <Header />
+    <div className="flex justify-center items-center h-screen">
+      <ClimbingBoxLoader color="#36d7b7" />
+    </div>
+  </div>);
 }
   return (
+    <div className="bg-none min-h-screen text-black container mx-auto p-4">
+    <Header />
     <div className="container bg-none min-h-screen mx-auto p-3">
       <div className="flex justify-between items-center mb-1">
         <button onClick={goBack} className="text-gray-900 hover:text-blue-900 font-bold text-2xl md:text-xl flex">
@@ -274,6 +281,7 @@ if (!tokenData && isLoading) {
             </div>
           </div>
         </div>
+      </div>
       </div>  
   );
 };
