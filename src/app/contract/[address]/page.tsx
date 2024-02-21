@@ -179,7 +179,7 @@ if (!tokenData && isLoading) {
       <div className="p-4">
       <div className="flex flex-wrap gap-2 justify-start items-center">
         <div className="flex items-center border border-black">
-          <span className="px-3 py-1">Nebula score 75/100</span>
+          <span className="px-3 py-1">Nebula score 0/100</span>
         </div>
         <div className="flex items-center border border-black" onClick={openModal}>
           <span className="px-3 py-1">Contract code</span>
