@@ -2,7 +2,7 @@
 
 ## Overview
 
-Nebula is a dynamic analysis tool designed to assess and score the safety of smart contracts. By utilizing a comprehensive set of parameters, Nebula evaluates the security posture of smart contracts to inform users about potential risks before they engage with the contract. Nebula currently leverages data from the Voyager API and is expanding its capabilities with the StarkScan APIs for enriched safety assessments.
+Nebula is a dynamic analysis tool designed to assess and score the safety of smart contracts. By utilizing a comprehensive set of parameters, Nebula evaluates the investment and security vulnerability of smart contracts to inform users about potential risks before they engage with the contract. Nebula currently leverages data from the Voyager API and is expanding its capabilities with the StarkScan APIs for enriched safety assessments.
 
 ## Features
 
@@ -56,13 +56,20 @@ Nebula categorizes risks into three levels, each with specific criteria:
 
 - Users have the ability to transfer their tokens at all times.
 - The contract operates without imposing custom fees.
-- There are recent user interactions with the smart contract.
+- Immutable Metadata
 
 ### Low Risk
 
 - No locks or restrictions detected in token transferability.
 - The contract logic is immutable and cannot be upgraded post-deployment.
-- Recent contract interactions are present, indicating active usage.
+- Token Metadata Found.
+
+### Specific Risk
+
+- No Locks Detected: Weight.
+- Contract Was Not Deployed Recently.
+- Identified Valid Token Liquidity.
+- Recent Interaction was within 30 Days
 
 ## Integration with StarkScan APIs
 
